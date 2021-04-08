@@ -1,24 +1,116 @@
-@import url("https://use.typekit.net/tif6uvt.css");
 @import url('https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@100;300&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+/* @import url("https://use.typekit.net/tif6uvt.css"); */
 
 /* Turkey page styling */
+
 body {
+
   background-color: #1c1b1d;
   color: #fff;
   font-family: "Aktiv Grotesk", "PT Sans", "Arial", sans-serif;
-  display: grid;
-	grid-template-columns: 1fr 2fr;
-	grid-gap: 15px;
+}
+
+.blank {
+  height: 80px;
 }
 
 h1,
 h2,
 h3 {
   font-family: "Purista Web", "Londrina Solid", monospace;
-  font-weight: 100;
+  font-weight: 300;
+  letter-spacing: 3px;
 }
 
+header {
+  background-color: #a6a6a6;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  box-shadow: 0px 20px 20px #000000;
+}
+
+main {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+h1,
 nav {
-  /* position: sticky; */
-  /* How do I make this sticky on the side? */
+  display: inline-block;
+  padding: 0px 20px;
+}
+
+nav li {
+  float: left;
+  list-style: none;
+  margin-right: 8px;
+}
+
+p,
+article {
+  max-width: 70ch;
+}
+
+a,
+a:link,
+a:visited {
+  color: rgb(228,10,28);
+}
+
+a:hover {
+  color: rgb(117,7,7);
+}
+
+a:active {
+   color: rgb(227, 118, 127);
+}
+
+#introduction,
+#geography {
+  max-width: 10000px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+#introduction{
+  grid-template-areas:
+    "space space"
+    "head head"
+    "grid-text grid-image";
+}
+
+#introduction #blank{
+  grid-area: space;
+}
+
+#introduction h2 {
+  grid-area: head;
+}
+
+#introduction article {
+  grid-area: grid-text;
+}
+
+#introduction aside {
+  grid-area: grid-image;
+}
+
+#geography #blank{
+  grid-column: 1 / -1;
+}
+
+#geography h2 {
+  grid-column: 1 / -1;
+}
+
+#geography article {
+  grid-column: 1 / 2;
+}
+
+#geography aside {
+  grid-column: 2 / -1;
+  grid-row: 3 / span 3;
 }
