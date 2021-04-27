@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@100;300&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-/* @import url("https://use.typekit.net/tif6uvt.css"); */
+@import url("https://use.typekit.net/tif6uvt.css");
 
 /* Turkey page styling */
 
@@ -7,7 +7,7 @@ body {
 
   background-color: #1c1b1d;
   color: #fff;
-  font-family: "Aktiv Grotesk", "PT Sans", "Arial", sans-serif;
+  font-family: "Aktiv-Grotesk", "PT Sans", "Arial", sans-serif;
 }
 
 .blank {
@@ -17,9 +17,9 @@ body {
 h1,
 h2,
 h3 {
-  font-family: "Purista Web", "Londrina Solid", monospace;
-  font-weight: 300;
-  letter-spacing: 3px;
+  font-family: "Purista-Web", "Londrina Solid", monospace;
+  font-weight: 600;
+  /* letter-spacing: 2px; */
 }
 
 header {
