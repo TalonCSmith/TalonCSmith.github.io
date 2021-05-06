@@ -9,14 +9,18 @@
 - *Look at my code please, is there anything you can tell is already wrong/ not best practices?
 */
 
+html {
+  height: 100%;
+}
+
 body {
   background-color: #1b1b1b;
   color: #fff;
   font-family: "Aktiv-Grotesk", "PT Sans", "Arial", sans-serif;
   margin: auto;
   width: 100%;
-  position: relative;
   min-height: 100vh;
+  position: relative;
 }
 
 .blank {
@@ -85,7 +89,7 @@ header img {
 main {
   margin-left: 15%;
   margin-right: 15%;
-  width: 70%
+  width: 70%;
 }
 
 h1,
@@ -123,10 +127,6 @@ nav li {
 nav h1 {
   text-align: center;
   text-decoration: none;
-}
-
-nav ul {
-  padding-inline-start: 0px;
 }
 
 #icons {
@@ -183,6 +183,12 @@ a:hover {
 li svg {
   width: 2em;
   height: 2em;
+}
+
+iframe {
+  width: 100%;
+  border: 0;
+  scrolling:
 }
 
 main section{
@@ -252,20 +258,31 @@ main section img {
 }
 
 footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
   text-align: center;
   width: 100%;
-  background-color: #000000;
-  box-shadow: 0px 10px 20px 20px #000000;
-  position: absolute;
-  /* top: 100%;
-  height: 100px;
-  padding: 20px auto; */
-  left: 0;
-  bottom: 0;
+  height: 70px;
+  margin-top: 10px
+  padding-top: 10px;
+  z-index: 30;
 }
 
 footer p {
-  margin: 1em auto;
+  margin: 10px auto 0 auto;
+}
+
+.skew-footer {
+  position: absolute;
+  bottom: 0;
+  left: 40;
+  width: 100%;
+  height: 80px;
+  transform: skewY(2deg);
+  background-color: #000000;
+  box-shadow: 0px 10px 20px 20px #000000;
+  z-index: 25;
 }
 
 @media only screen and (max-width: 1024px) {
@@ -277,6 +294,7 @@ footer p {
 
   .skew{
     height: 120px;
+
     transform: skewY(2deg);
   }
 
@@ -294,20 +312,13 @@ footer p {
     display: flex;
     align-items: center;
     grid-column: 1/-1;
-    margin: 0 auto 5 auto;
+    margin: 0 auto 0 auto;
   }
 
   #socials {
     order: 2;
     color: red;
     margin-left: auto;
-  }
-
-  .home-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 2rem;
-    width: 100%;
   }
 
   main section{
@@ -317,4 +328,16 @@ footer p {
     grid-gap: 40px;
     width: 100%;
   }
+
+  #about-grid h3 {
+    font-size: 1.5em;
+  }
+
+  .home-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 2rem;
+    width: 100%;
+  }
+
 }
