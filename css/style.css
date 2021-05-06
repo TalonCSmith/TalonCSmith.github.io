@@ -1,57 +1,173 @@
 @import url('https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@100;300&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 @import url("https://use.typekit.net/tif6uvt.css");
 
-/* Turkey page styling */
+/* Portfolio page styling
+- Is there a difference between opacity 1 and 10?
+- **A better color for my header?
+- how to make my grid objects have text only show when hover?
+- Custom fabicon?
+- *Look at my code please, is there anything you can tell is already wrong/ not best practices?
+*/
 
 body {
-
-  background-color: #1c1b1d;
+  background-color: #1b1b1b;
   color: #fff;
   font-family: "Aktiv-Grotesk", "PT Sans", "Arial", sans-serif;
+  margin: auto;
+  width: 100%;
+  position: relative;
+  min-height: 100vh;
 }
 
 .blank {
-  height: 80px;
+  height: 120px;
 }
 
-h1,
+.skew{
+  position: fixed;
+  width: 100%;
+  height: 100px;
+  left: 0;
+  top: -20px;
+  background-color: #000000;
+  box-shadow: 0px 10px 20px 20px #000000;
+  z-index: 9;
+  transform: skewY(2deg);
+}
+
+h1 {
+  font-family:"Chinese-Rocks", "Purista-Web", monospace;
+  font-size: 2.5em;
+  letter-spacing: 0.05em;
+}
+
 h2,
 h3 {
   font-family: "Purista-Web", "Londrina Solid", monospace;
-  font-weight: 600;
+  font-size: 2em;
+  font-weight: 400;
   /* letter-spacing: 2px; */
 }
 
+strong {
+ color: rgb(228,10,28);
+}
+
 header {
-  background-color: #a6a6a6;
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 20;
+  /* margin-top: 2em; */
   width: 100%;
-  z-index: 10;
-  box-shadow: 0px 20px 20px #000000;
+}
+
+#header-contents {
+  padding: 30px 40px 0px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header ul,
+header h1 {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+header img {
+  vertical-align: baseline;
+  width: 3em;
+  height: 3em;
+  margin-right: 0.3em;
 }
 
 main {
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 15%;
+  margin-right: 15%;
+  width: 70%
 }
 
 h1,
 nav {
   display: inline-block;
-  padding: 0px 20px;
 }
 
 nav li {
-  float: left;
-  list-style: none;
-  margin-right: 8px;
+  padding: 0 5px;
+}
+
+#pages {
+  order: 0;
+}
+
+#pages li {
+  display: inline-block;
+}
+
+#header-contents div {
+  order: 1;
+  display: flex;
+  align-items: center;
+}
+
+#socials {
+  order: 2;
+  color: red;
+}
+
+#socials li {
+  display: inline-block;
+}
+
+nav h1 {
+  text-align: center;
+  text-decoration: none;
+}
+
+nav ul {
+  padding-inline-start: 0px;
+}
+
+#icons {
+  width: 70px;
+  height: 70px;
+  fill: blue;
+}
+
+#icons:hover {
+  fill: red;
+}
+
+header figure {
+  width: 3em;
+  height: 3em;
 }
 
 p,
 article {
   max-width: 70ch;
+}
+
+header a {
+  color: #fff;
+  align-items: center;
+  text-decoration: none;
+}
+
+nav a,
+#header-contents h1 a,
+nav a:link,
+nav a:visited {
+  color: #fff;
+}
+
+nav a:hover {
+  color: rgb(228,10,28);
+}
+
+nav a:active {
+   color: rgb(227, 118, 127);
 }
 
 a,
@@ -61,56 +177,144 @@ a:visited {
 }
 
 a:hover {
-  color: rgb(117,7,7);
-}
-
-a:active {
    color: rgb(227, 118, 127);
 }
 
-#introduction,
-#geography {
-  max-width: 10000px;
+li svg {
+  width: 2em;
+  height: 2em;
+}
+
+main section{
+  margin-top: 40px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 40px;
+  width: 100%;
 }
 
-#introduction{
-  grid-template-areas:
-    "space space"
-    "head head"
-    "grid-text grid-image";
+main section img {
+  width: 100%;
 }
 
-#introduction #blank{
-  grid-area: space;
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
+  width: 100%;
 }
 
-#introduction h2 {
-  grid-area: head;
+.home-grid h2 {
+  grid-column: 1/-1;
+  text-align: center;
 }
 
-#introduction article {
-  grid-area: grid-text;
+.home-grid figure{
+  position: relative;
+  height: 100%;
+  width: 100%;
+  margin: 0;
 }
 
-#introduction aside {
-  grid-area: grid-image;
+.home-grid img {
+  display: block;
+  width: 100%;
+  /* height: 100%; */
+  /* object-fit: cover; */
+  transition: transform .6s;
 }
 
-#geography #blank{
-  grid-column: 1 / -1;
+.home-grid figcaption {
+  font-family: "Purista-Web", "Londrina Solid", monospace;
+  font-size: 2rem;
+  position: absolute;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+  background: rgb(228,10,28, 0.6);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: #fff;
+  opacity: 0;
+  box-shadow: 0 0 39px rgb(228,10,28);
+  transition: opacity .2s, visibility .2s;
 }
 
-#geography h2 {
-  grid-column: 1 / -1;
+.home-grid figure:hover figcaption {
+  visibility: visible;
+  opacity: 1;
 }
 
-#geography article {
-  grid-column: 1 / 2;
+footer {
+  text-align: center;
+  width: 100%;
+  background-color: #000000;
+  box-shadow: 0px 10px 20px 20px #000000;
+  position: absolute;
+  /* top: 100%;
+  height: 100px;
+  padding: 20px auto; */
+  left: 0;
+  bottom: 0;
 }
 
-#geography aside {
-  grid-column: 2 / -1;
-  grid-row: 3 / span 3;
+footer p {
+  margin: 1em auto;
+}
+
+@media only screen and (max-width: 1024px) {
+  #header-contents {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 30px 40px 0px 40px;
+  }
+
+  .skew{
+    height: 120px;
+    transform: skewY(2deg);
+  }
+
+  .blank {
+    height: 140px;
+  }
+
+  #pages {
+    order: 1;
+    margin-right: auto;
+  }
+
+  #header-contents div {
+    order: 0;
+    display: flex;
+    align-items: center;
+    grid-column: 1/-1;
+    margin: 0 auto 5 auto;
+  }
+
+  #socials {
+    order: 2;
+    color: red;
+    margin-left: auto;
+  }
+
+  .home-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 2rem;
+    width: 100%;
+  }
+
+  main section{
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 40px;
+    width: 100%;
+  }
 }
