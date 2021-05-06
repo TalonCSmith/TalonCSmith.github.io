@@ -219,6 +219,7 @@ main section img {
   text-align: center;
 }
 
+.grid-page,
 .home-grid figure{
   position: relative;
   height: 100%;
@@ -234,6 +235,7 @@ main section img {
   transition: transform .6s;
 }
 
+.grid-page p,
 .home-grid figcaption {
   font-family: "Purista-Web", "Londrina Solid", monospace;
   font-size: 2rem;
@@ -246,6 +248,7 @@ main section img {
   height: 100%;
   opacity: 0.5;
   background: rgb(228,10,28, 0.6);
+  margin-top: 0;
   top: 0;
   bottom: 0;
   left: 0;
@@ -256,6 +259,7 @@ main section img {
   transition: opacity .2s, visibility .2s;
 }
 
+.grid-page:hover p,
 .home-grid figure:hover figcaption {
   visibility: visible;
   opacity: 1;
