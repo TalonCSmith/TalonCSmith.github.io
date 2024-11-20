@@ -97,6 +97,10 @@ var Stats = function() {
                 j.style.display = "block"
         }
     }, false);
+    //hide the stat elememt
+    stats.dom.style.display = 'none';
+    e.style.display = 'none';
+    
     m = document.createElement("div");
     m.style.backgroundColor = "rgb(" + Math.floor(b.fps.bg.r / 2) + "," + Math.floor(b.fps.bg.g /
         2) + "," + Math.floor(b.fps.bg.b / 2) + ")";
