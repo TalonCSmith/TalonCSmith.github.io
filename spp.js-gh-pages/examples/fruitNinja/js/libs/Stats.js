@@ -1,5 +1,13 @@
 // stats.js r5 - http://github.com/mrdoob/stats.js
-var Stats = function() {
+
+var Stats = function() { 
+    return { 
+        domElement: { style: { display: 'none' } }, 
+        update: function() {} 
+    }; 
+};
+
+/*var Stats = function() {
     function w(d, K, n) {
         var u, f, c;
         for (f = 0; f < 30; f++)
@@ -97,9 +105,7 @@ var Stats = function() {
                 j.style.display = "block"
         }
     }, false);
-    //hide the stat elememt
-    stats.dom.style.display = 'none';
-    e.style.display = 'none';
+    
     
     m = document.createElement("div");
     m.style.backgroundColor = "rgb(" + Math.floor(b.fps.bg.r / 2) + "," + Math.floor(b.fps.bg.g /
@@ -205,7 +211,7 @@ var Stats = function() {
                 }
                 z = l;
                 y = 0
-            }
+            }*/
         }
     }
 };
