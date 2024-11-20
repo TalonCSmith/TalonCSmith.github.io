@@ -1,13 +1,6 @@
 // stats.js r5 - http://github.com/mrdoob/stats.js
 
-var Stats = function() { 
-    return { 
-        domElement: { style: { display: 'none' } }, 
-        update: function() {} 
-    }; 
-};
-
-/*var Stats = function() {
+var Stats = function() {
     function w(d, K, n) {
         var u, f, c;
         for (f = 0; f < 30; f++)
@@ -88,6 +81,10 @@ var Stats = function() {
     e.style.width = "80px";
     e.style.opacity = "0.9";
     e.style.zIndex = "10001";
+
+    //this sets the stats to none
+    e.style.display = "none";
+    
     e.addEventListener("click", function() {
         v++;
         v == x && (v = 0);
@@ -211,7 +208,7 @@ var Stats = function() {
                 }
                 z = l;
                 y = 0
-            }*/
+            }
         }
     }
 };
