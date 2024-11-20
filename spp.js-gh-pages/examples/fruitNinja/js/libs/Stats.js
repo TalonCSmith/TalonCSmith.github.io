@@ -79,12 +79,8 @@ var Stats = function() {
     e = document.createElement("div");
     e.style.cursor = "pointer";
     e.style.width = "80px";
-    e.style.opacity = "0.9";
-    e.style.zIndex = "10001";
-
-    //this sets the stats to none
-    e.style.display = "none";
-    
+    e.style.opacity = "0";
+    e.style.zIndex = "10001";    
     e.addEventListener("click", function() {
         v++;
         v == x && (v = 0);
