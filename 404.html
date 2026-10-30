@@ -7,12 +7,19 @@
     <title>Lost | Talon Smith</title>
     <meta name="theme-color" content="#121212" />
     <!-- GitHub Pages serves this page at whatever path was missing (e.g. /foo/bar), so on the live
-         site resolve every relative link from the root. Opened as a local file, links stay relative. -->
+         site resolve every relative link from the root, and point home links at the clean URL
+         (/ and /#work, not /index.html). Opened as a local file, links stay as written. -->
     <script>
       if (location.protocol !== "file:") {
         const base = document.createElement("base");
         base.href = "/";
         document.head.append(base);
+
+        document.addEventListener("DOMContentLoaded", () => {
+          document.querySelectorAll('a[href^="index.html"]').forEach((link) => {
+            link.setAttribute("href", link.getAttribute("href").replace("index.html", "./"));
+          });
+        });
       }
     </script>
     <link rel="icon" type="image/svg+xml" href="assets/freeplay-icon.svg" />

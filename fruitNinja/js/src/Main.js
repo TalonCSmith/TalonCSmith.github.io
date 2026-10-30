@@ -70,7 +70,7 @@ function init()
 
 	
 	// Use hand tracking or mouse to control
-	topCanvas.addEventListener('mousemove', mousemove, false);
+	topCanvas.addEventListener('pointermove', mousemove, false); // mouse, pen and touch
 	handtracking = new HandTracking(topCanvas.width, topCanvas.height);
   handtracking.tracker.params.simple = true;
 	handtracking.addEventListener('handmove', handmove);
@@ -165,17 +165,11 @@ function replay(e)
 //mouse event
 function mousemove(e) {
 
-	// Get the mouse position relative to the canvas element.
-	if (e.layerX || e.layerX == 0)
-	{
-		// Firefox
-		mouse.x = e.layerX;
-		mouse.y = e.layerY;
-	} else if (e.offsetX || e.offsetX == 0)
-	{ // Opera
-		mouse.x = e.offsetX;
-		mouse.y = e.offsetY;
-	};
+	// Pointer position in game coordinates. The canvas is scaled to fit the screen with CSS,
+	// so convert from its on-screen size back to the fixed gameWidth x gameHeight.
+	var rect = topCanvas.getBoundingClientRect();
+	mouse.x = (e.clientX - rect.left) * gameWidth / rect.width;
+	mouse.y = (e.clientY - rect.top) * gameHeight / rect.height;
 	buildBladeParticle(mouse.x, mouse.y);
 };
 //hand tracking event
