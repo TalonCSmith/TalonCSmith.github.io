@@ -10,8 +10,12 @@ HandTracking = function(canvas_width, canvas_height) {
 
   var shadowCanvas = document.getElementById("shadow");
 
+  // Camera hand tracking is off: it needs a depth camera, and asking every visitor for
+  // webcam access isn't worth it. The game is played with the mouse. Set to true to re-enable.
+  var USE_CAMERA = false;
+
   navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
-  if (navigator.getUserMedia) {
+  if (USE_CAMERA && navigator.getUserMedia) {
     navigator.getUserMedia({ video: { 'mandatory': { 'depth': true}} },
           function(stream) {
             video.src = window.webkitURL.createObjectURL(stream);
