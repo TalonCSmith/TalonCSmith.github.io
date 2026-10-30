@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.osmo.supply)",
+      "Bash(python3 -I -)",
+      "Bash(sed -n '/^@media \\(max-width: 860px\\)/,/^}/p' css/main.css)",
+      "Bash(sed -n '/^\\\\.work\\\\.section/,/^\\\\.card {/p' css/main.css)",
+      "Bash(sed -n '/^\\\\/\\\\* Liquid background/,/^@keyframes liquid-in/p' css/main.css)",
+      "Bash(sed -n '/@media \\(max-width: 767px\\)/,/^}/p' css/main.css)"
+    ]
+  }
+}

@@ -1,0 +1,1105 @@
+/* talonsmith.com: Freeplay Studios brand system */
+
+:root {
+  /* Brand colors */
+  --victory: #c8001c;
+  --crimson: #b3001c;
+  --onyx: #121212;
+  --onyx-2: #1a1a1a;
+  --presence: #f5f5f5;
+  --surge: #3be3d6;
+  --muted: rgba(245, 245, 245, 0.66);
+  --line: rgba(245, 245, 245, 0.12);
+
+  /* Hero ASCII animation (talon.webflow.io uses gold: #eacb8b at 0.4) */
+  --ascii-color: var(--victory);
+  --ascii-opacity: 0.3;
+
+  /* Type */
+  --font: "purista-web", "Purista-Web", "Rajdhani", system-ui, sans-serif;
+
+  /* Layout */
+  --gutter: clamp(16px, 5vw, 64px);
+  /* The one page width: the hero brackets, work frame, section content, nav and footer all use it */
+  --page-w: 1200px;
+  --bracket-len: 28px;
+  --bracket-w: 3px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-padding-top: 80px;
+}
+
+/* Added by js/main.js once the page has loaded. Smooth from the start, the jump to a #section
+   in the URL (e.g. a link from the 404 page) gets cut short and leaves the page at the top. */
+html.smooth-scroll {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--onyx);
+  color: var(--presence);
+  font-family: var(--font);
+  font-weight: 500;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--surge);
+  outline-offset: 4px;
+}
+
+::selection {
+  background: var(--victory);
+  color: var(--presence);
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 8px;
+  z-index: 100;
+  padding: 8px 14px;
+  background: var(--presence);
+  color: var(--onyx);
+}
+
+.skip-link:focus {
+  left: 8px;
+}
+
+.accent {
+  color: var(--victory);
+}
+
+.eyebrow {
+  margin: 0 0 1rem;
+  color: var(--surge);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Target brackets: four white corners drawn on a pseudo-element */
+.brackets {
+  position: relative;
+}
+
+.brackets::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  --c: var(--presence);
+  background:
+    linear-gradient(var(--c), var(--c)) top left / var(--bracket-len) var(--bracket-w),
+    linear-gradient(var(--c), var(--c)) top left / var(--bracket-w) var(--bracket-len),
+    linear-gradient(var(--c), var(--c)) top right / var(--bracket-len) var(--bracket-w),
+    linear-gradient(var(--c), var(--c)) top right / var(--bracket-w) var(--bracket-len),
+    linear-gradient(var(--c), var(--c)) bottom left / var(--bracket-len) var(--bracket-w),
+    linear-gradient(var(--c), var(--c)) bottom left / var(--bracket-w) var(--bracket-len),
+    linear-gradient(var(--c), var(--c)) bottom right / var(--bracket-len) var(--bracket-w),
+    linear-gradient(var(--c), var(--c)) bottom right / var(--bracket-w) var(--bracket-len);
+  background-repeat: no-repeat;
+  z-index: 2;
+  transition: inset 0.4s var(--ease);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.95em 1.6em;
+  border: 2px solid transparent;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.25s var(--ease);
+}
+
+.btn > span:not([data-magnetic-cursor-bg]) {
+  transition: transform 0.25s var(--ease);
+}
+
+.btn:hover > span:not([data-magnetic-cursor-bg]) {
+  transform: translateX(4px);
+}
+
+.btn--primary {
+  background: var(--victory);
+  color: var(--presence);
+}
+
+.btn--primary:hover {
+  background: var(--crimson);
+}
+
+.btn--ghost {
+  border-color: var(--line);
+  color: var(--presence);
+}
+
+.btn--ghost:hover {
+  border-color: var(--victory);
+  color: var(--victory);
+}
+
+.btn--light {
+  background: var(--presence);
+  color: var(--onyx);
+}
+
+.btn--light:hover {
+  background: var(--onyx);
+  color: var(--presence);
+}
+
+/* Nav */
+.nav {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px max(var(--gutter), calc((100% - var(--page-w)) / 2));
+}
+
+/* Progressive blur behind the nav: five stacked backdrop-blur layers, each masked to
+   its own band, so the blur ramps from strong at the top edge to nothing below. */
+.progressive-blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 40;
+  width: 100%;
+  height: 10em;
+  font-size: 12px; /* blur values below are in em, so this scales the whole effect */
+  pointer-events: none;
+  isolation: isolate;
+  contain: paint;
+  transform: translateZ(0);
+}
+
+.progressive-blur::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(18, 18, 18, 0.7), rgba(18, 18, 18, 0) 70%);
+}
+
+.progressive-blur__layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.progressive-blur__layer.is--1 {
+  -webkit-backdrop-filter: blur(0.09375em);
+  backdrop-filter: blur(0.09375em);
+  -webkit-mask: linear-gradient(to top, #0000 50%, #000 62.5% 75%, #0000 87.5%);
+  mask: linear-gradient(to top, #0000 50%, #000 62.5% 75%, #0000 87.5%);
+}
+
+.progressive-blur__layer.is--2 {
+  -webkit-backdrop-filter: blur(0.1875em);
+  backdrop-filter: blur(0.1875em);
+  -webkit-mask: linear-gradient(to top, #0000 62.5%, #000 75% 87.5%, #0000 100%);
+  mask: linear-gradient(to top, #0000 62.5%, #000 75% 87.5%, #0000 100%);
+}
+
+.progressive-blur__layer.is--3 {
+  -webkit-backdrop-filter: blur(0.375em);
+  backdrop-filter: blur(0.375em);
+  -webkit-mask: linear-gradient(to top, #0000 75%, #000 87.5% 100%);
+  mask: linear-gradient(to top, #0000 75%, #000 87.5% 100%);
+}
+
+.progressive-blur__layer.is--4 {
+  -webkit-backdrop-filter: blur(0.75em);
+  backdrop-filter: blur(0.75em);
+  -webkit-mask: linear-gradient(to top, #0000 82%, #000 92% 100%);
+  mask: linear-gradient(to top, #0000 82%, #000 92% 100%);
+}
+
+.progressive-blur__layer.is--5 {
+  -webkit-backdrop-filter: blur(1.5em);
+  backdrop-filter: blur(1.5em);
+  -webkit-mask: linear-gradient(to top, #0000 88%, #000 100%);
+  mask: linear-gradient(to top, #0000 88%, #000 100%);
+}
+
+.nav__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.nav__logo {
+  width: auto;
+  height: 1.75rem;
+}
+
+.nav__links {
+  display: flex;
+  gap: clamp(16px, 3vw, 36px);
+}
+
+.nav__links a {
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+
+.nav__links a:hover {
+  color: var(--victory);
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 96px var(--gutter) 64px;
+  background: var(--onyx);
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* ASCII animation: 100 columns x 51 rows of text, sized to fit the hero */
+.hero__ascii {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  margin: 0;
+  width: 100ch;
+  height: 61.2em;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+  font-size: clamp(7px, min(calc(100svh / 61.2), calc(100vw / 45)), 16px);
+  line-height: 1.2;
+  color: var(--ascii-color);
+  opacity: var(--ascii-opacity);
+  white-space: pre;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero__frame {
+  width: 100%;
+  max-width: var(--page-w);
+  padding: clamp(24px, 4svh, 56px) clamp(20px, 5vw, 72px);
+  text-align: center;
+  --bracket-len: clamp(32px, 6vw, 72px);
+  --bracket-w: 4px;
+}
+
+.hero__title {
+  margin: 0;
+  font-weight: 600;
+  font-size: clamp(2.6rem, 8.2vw, 7.25rem);
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.hero__title .accent {
+  display: inline-block;
+}
+
+/* Three stacked lines, each fitted so its letters span the same width (js/fit-title.js sets
+   the sizes). The font sizes below are close approximations for when scripts don't run. */
+.hero__title--stacked {
+  --title-w: min(78vw, 28rem, 46svh);
+  width: var(--title-w);
+  margin: 0 auto;
+  letter-spacing: 0;
+  text-align: left;
+}
+
+.hero__line {
+  display: block;
+  white-space: nowrap;
+}
+
+.hero__line:nth-child(1) { font-size: calc(var(--title-w) / 4.55); }
+.hero__line:nth-child(2) { font-size: calc(var(--title-w) / 2.75); }
+.hero__line:nth-child(3) { font-size: calc(var(--title-w) / 4.7); }
+
+.hero__lead {
+  max-width: 60ch;
+  margin: 1.25rem auto 0;
+  color: var(--muted);
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+}
+
+/* One sentence per line; each stays on one line while it fits */
+.hero__lead span {
+  display: block;
+}
+
+.hero__lead a {
+  color: var(--presence);
+  text-decoration-color: var(--victory);
+  text-underline-offset: 4px;
+}
+
+.hero__lead a:hover {
+  color: var(--victory);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 1.75rem;
+}
+
+.hero__scroll {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  width: 32px;
+  height: 28px;
+  background: var(--line);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform: translateX(-50%);
+  overflow: hidden;
+}
+
+.hero__scroll span {
+  position: absolute;
+  inset: 0;
+  background: var(--victory);
+  animation: drip 2s var(--ease) infinite;
+}
+
+@keyframes drip {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(100%); }
+}
+
+/* Sections */
+.section {
+  max-width: calc(var(--page-w) + 2 * var(--gutter)); /* content is exactly the page width */
+  margin: 0 auto;
+  padding: clamp(80px, 12vw, 160px) var(--gutter);
+  /* In-page links land on the section's content, not on its empty top padding */
+  scroll-margin-top: calc(-1 * clamp(80px, 12vw, 160px));
+}
+
+.section__head {
+  max-width: 720px;
+  margin-bottom: clamp(40px, 6vw, 72px);
+}
+
+.section__title {
+  margin: 0 0 1.5rem;
+  font-weight: 600;
+  font-size: clamp(2rem, 5vw, 3.6rem);
+  line-height: 1.05;
+}
+
+/* About */
+.about {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(40px, 7vw, 100px);
+  align-items: center;
+}
+
+.about__photo {
+  padding: 18px;
+}
+
+.about__photo img {
+  width: 100%;
+  height: auto;
+}
+
+.about .section__title .accent {
+  display: block;
+}
+
+.about__copy p {
+  color: var(--muted);
+  margin: 0 0 1.2rem;
+}
+
+.about__copy strong {
+  color: var(--presence);
+  font-weight: 600;
+}
+
+.about__copy em {
+  color: var(--surge);
+}
+
+.stats {
+  display: flex;
+  gap: clamp(24px, 5vw, 56px);
+  margin: 2.5rem 0 0;
+  padding: 2rem 0 0;
+  border-top: 1px solid var(--line);
+  list-style: none;
+}
+
+.stats li {
+  display: flex;
+  flex-direction: column;
+}
+
+.stats strong {
+  color: var(--victory);
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  line-height: 1;
+}
+
+.stats span {
+  margin-top: 0.4rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Work: stacking cards (Osmo). Every card is sticky inside one set of stationary brackets.
+   As the next card rises over it, the card tilts back and fades out (scroll-driven: Chrome,
+   Edge and recent Safari; other browsers still get the sticky stack). Each row is only as
+   tall as the frame, so the next card shows just below the brackets while the current one
+   is in focus. */
+.work.section {
+  --card-inset: 14px; /* breathing room between the brackets and the project cards */
+  --stack-card-height: min(62svh, 540px);
+  --stack-row: var(--stack-card-height); /* rows as tall as the frame: the next card peeks in below */
+  --stack-top: max(88px, calc((100svh - var(--stack-card-height)) / 2)); /* centered below the nav */
+  padding-bottom: 0; /* the stack's own bottom padding leads straight into the footer */
+  timeline-scope: --card-stack; /* lets the liquid layer follow the stack's scroll timeline */
+}
+
+.work__stack {
+  view-timeline-name: --card-stack;
+  /* Runway after the last row. Sticky cards can't use padding, so they unpin here and the
+     footer pushes the card and brackets up with it as it scrolls in. */
+  padding-bottom: var(--stack-top);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr); /* keep the column at the container width; the full-width liquid layer overflows it */
+  /* The last project card gets a full screen before Freeplay (row 4), so Freeplay doesn't
+     peek in under it; every other row is only as tall as the frame. */
+  grid-template-rows: repeat(3, var(--stack-row)) 100svh var(--stack-row);
+  position: relative;
+  width: 100%;
+}
+
+.card {
+  grid-column: 1;
+  grid-row: var(--stack-i, 1);
+  position: sticky;
+  top: var(--stack-top);
+  display: flex;
+  flex-direction: column;
+  height: var(--stack-card-height);
+  padding: 14px;
+  overflow: hidden;
+  background: var(--onyx-2);
+  text-decoration: none;
+  transform-origin: 50% 100%;
+  z-index: 11; /* above the pinned brackets (z-index 10) so the cursor frame can land on them */
+}
+
+/* Project cards are smaller than the frame; the Freeplay card has no box, so it fills it */
+.card:not(.card--freeplay) {
+  overflow: visible; /* the cursor frame extends out to the pinned brackets (images clip themselves) */
+  top: calc(var(--stack-top) + var(--card-inset));
+  height: calc(var(--stack-card-height) - 2 * var(--card-inset));
+  margin: var(--card-inset); /* inset on all four sides, so it sits inside the brackets before it pins too */
+}
+
+.card:nth-child(1) { --stack-i: 1; }
+.card:nth-child(2) { --stack-i: 2; }
+.card:nth-child(3) { --stack-i: 3; }
+.card:nth-child(4) { --stack-i: 4; }
+.card:nth-child(5) { --stack-i: 5; }
+
+@supports (width: calc(sibling-index() * 1px)) {
+  .card { --stack-i: sibling-index(); }
+}
+
+/* Card i tilts back while card i+1 travels one row up to the pin position. Measured on the
+   stack's "cover" range, which starts when the stack's top edge reaches the bottom of the
+   screen (so 100svh is added to each offset). */
+@supports (animation-timeline: view()) {
+  .card {
+    animation: card-stack-away linear forwards;
+    animation-timeline: --card-stack;
+    animation-range:
+      cover calc((var(--stack-i, 1) - 1) * var(--stack-row) - var(--stack-top) + 100svh)
+      cover calc(var(--stack-i, 1) * var(--stack-row) - var(--stack-top) + 100svh);
+  }
+
+  /* Card 4 tilts while Freeplay travels its full-screen distance: from entering the screen
+     (row offsets above, plus the full-screen row 4) to pinning in the frame */
+  .card:nth-child(4) {
+    animation-name: card-stack-away-early;
+    animation-range:
+      cover calc(3 * var(--stack-row) + 100svh)
+      cover calc(3 * var(--stack-row) + 200svh - var(--stack-top));
+  }
+
+  .card--freeplay {
+    animation: none; /* the last card doesn't tilt back */
+  }
+}
+
+/* Cards stay pinned behind the next one, so they vanish once it fully covers them.
+   Matters for the transparent Freeplay card, which would otherwise show them through. */
+@keyframes card-stack-away {
+  99% {
+    opacity: 1;
+  }
+  to {
+    transform: perspective(60em) rotateX(25deg) scale(0.85);
+    filter: brightness(0.45);
+    opacity: 0;
+  }
+}
+
+/* The card right before Freeplay fades out while the Freeplay content slides in */
+@keyframes card-stack-away-early {
+  40% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0;
+  }
+  to {
+    transform: perspective(60em) rotateX(25deg) scale(0.85);
+    filter: brightness(0.45);
+    opacity: 0;
+  }
+}
+
+.work__frame {
+  grid-column: 1;
+  grid-row: 1 / span 5;
+  align-self: start;
+  position: sticky;
+  top: var(--stack-top);
+  z-index: 10;
+  height: var(--stack-card-height);
+  pointer-events: none;
+  --bracket-len: 36px;
+  --bracket-w: 4px;
+}
+
+.work__frame::before {
+  inset: 0; /* page edges, same as the hero brackets */
+}
+
+.card__media {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background: #000;
+}
+
+.card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  transition: transform 0.6s var(--ease), filter 0.6s var(--ease);
+  filter: saturate(0.85);
+}
+
+.card__body {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 16px;
+  padding: 22px 8px 10px;
+}
+
+.card__num {
+  grid-row: span 3;
+  color: var(--victory);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 2.1;
+}
+
+.card__title {
+  margin: 0;
+  font-weight: 600;
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  line-height: 1.2;
+}
+
+.card__desc {
+  margin: 0.35rem 0 0.9rem;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.card__link {
+  color: var(--presence);
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.card:hover .card__media img {
+  transform: scale(1.04);
+  filter: saturate(1);
+}
+
+.card:hover .card__link {
+  color: var(--victory);
+}
+
+/* Desktop: project cards run side by side, with the screenshot on the right and the
+   project info on the left. */
+@media (min-width: 861px) {
+  /* The frame (brackets) height is the project card's height plus its inset on both sides.
+     It follows the page width so the 64% image panel stays 16:10 (no cropping), is never
+     taller than 62% of the screen, and never shorter than the Freeplay card needs. */
+  .work.section {
+    --card-inset: 32px;
+    --stack-card-height: max(
+      420px,
+      min(
+        62svh,
+        560px,
+        calc(2 * var(--card-inset) + 28px + 0.64 * (min(var(--page-w), 100vw - 2 * var(--gutter)) - 2 * var(--card-inset) - 28px) * 0.625)
+      )
+    );
+  }
+
+  .card:not(.card--freeplay) {
+    flex-direction: row-reverse; /* image on the right, info on the left */
+    gap: clamp(24px, 3vw, 48px);
+  }
+
+  /* The image panel keeps the screenshot's 16:10 shape (capped so the info keeps room) */
+  .card:not(.card--freeplay) .card__media {
+    flex: 0 1 auto;
+    height: 100%;
+    max-width: 64%;
+    aspect-ratio: 16 / 10;
+  }
+
+  .card:not(.card--freeplay) .card__body {
+    flex: 1 1 0;
+    min-width: 0;
+    grid-template-columns: 1fr;
+    align-content: end; /* info sits at the bottom of the card */
+    row-gap: 0;
+    padding: 0 clamp(8px, 2vw, 32px) clamp(8px, 1.5vw, 24px);
+  }
+
+  .card:not(.card--freeplay) .card__num {
+    grid-row: auto;
+    margin-bottom: 1rem;
+    line-height: 1;
+  }
+
+  .card:not(.card--freeplay) .card__title {
+    font-size: clamp(1.75rem, 3vw, 2.75rem);
+  }
+
+  .card:not(.card--freeplay) .card__desc {
+    margin: 0.75rem 0 1.75rem;
+    font-size: 1.125rem;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Fixed height from the card's content so the frame matches; centered below the nav */
+  .work.section {
+    --stack-card-height: max(450px, calc((100vw - 2 * var(--gutter) - 2 * var(--card-inset) - 28px) * 0.625 + 210px + 2 * var(--card-inset))); /* 450px floor keeps the Freeplay card's text inside the frame on narrow phones */
+    --stack-top: max(88px, calc((100svh - var(--stack-card-height)) / 2));
+  }
+
+  .card__media {
+    flex: none;
+    aspect-ratio: 16 / 10;
+  }
+}
+
+/* Freeplay card: no background, centered content */
+.card--freeplay {
+  align-items: center;
+  justify-content: center;
+  padding: clamp(24px, 5vw, 56px);
+  text-align: center;
+  background: transparent; /* content sits straight on the liquid, inside the brackets */
+}
+
+.card__freeplay {
+  max-width: 44rem;
+}
+
+/* Liquid background: a full-width sticky layer, the first thing in the section. It is pinned
+   to the screen for the whole section, fully transparent, and brightens in place as the
+   Freeplay card approaches (no moving edge). It only unpins at the end of the section, so
+   the footer pushes it up. */
+.work__liquid {
+  position: sticky;
+  top: 0;
+  z-index: -1;
+  width: 100vw;
+  height: 100svh;
+  margin-left: calc(50% - 50vw); /* full width, centered */
+  opacity: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(200, 0, 28, 0.55), rgba(120, 0, 18, 0.75)),
+    url("../assets/liquid-dark.jpg") center / cover no-repeat; /* shown if WebGL isn't available */
+  background-blend-mode: multiply, normal;
+}
+
+/* The layer keeps its real height so it unpins at the right moment; the heading is pulled up over it */
+.work__liquid + .section__head {
+  margin-top: -100svh;
+}
+
+/* Reveal runs on the stack's scroll timeline: it starts when Freeplay first appears at the
+   bottom of the screen and is fully revealed when Freeplay pins in the frame. */
+@supports (animation-timeline: view()) {
+  .work__liquid {
+    animation: liquid-in linear both;
+    animation-timeline: --card-stack;
+    animation-range:
+      cover calc(3 * var(--stack-row) + 100svh)
+      cover calc(3 * var(--stack-row) + 200svh - var(--stack-top));
+  }
+}
+
+@keyframes liquid-in {
+  to { opacity: 1; }
+}
+
+.work__shader {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Same 50% black layer the Freeplay hero puts over its shader */
+.work__liquid.has-shader::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.cta__logo {
+  width: min(320px, 70%);
+  margin: 0 auto 2rem;
+}
+
+.cta__title {
+  margin: 0;
+  font-weight: 600;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1.05;
+}
+
+.cta__lead {
+  max-width: 44ch;
+  margin: 1.2rem auto 2.2rem;
+  color: rgba(245, 245, 245, 0.85);
+}
+
+/* Footer: Osmo-style parallax footer, scaled down. The wrapper clips the footer while it
+   slides up (js/footer-parallax.js); the dark layer fades off it as it arrives. */
+.footer-wrap {
+  position: relative;
+  overflow: hidden;
+  background: var(--onyx);
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 4vw, 48px);
+  max-width: calc(var(--page-w) + 2 * var(--gutter));
+  margin: 0 auto;
+  padding: clamp(32px, 4vw, 48px) var(--gutter) clamp(24px, 3vw, 32px);
+  color: var(--presence);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.footer p {
+  margin: 0;
+}
+
+.footer__links-row {
+  display: flex;
+  gap: 40px;
+}
+
+.footer__col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: calc(33.3333% - 26.67px);
+}
+
+.footer__eyebrow {
+  color: var(--muted);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.footer__links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+}
+
+.footer__a {
+  color: inherit;
+  font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+  line-height: 1.1;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer__a:hover {
+  color: var(--victory);
+}
+
+.footer__copy {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.footer-wrap__dark {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  background: #0a0a0a;
+}
+
+/* Scroll reveal (enabled by JS only) */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+}
+
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+  .about {
+    grid-template-columns: 1fr;
+  }
+
+  .about__photo {
+    max-width: 420px;
+  }
+}
+
+@media (max-width: 767px) {
+  .footer__links-row {
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .footer__col {
+    width: 100%;
+    gap: 0.6rem;
+  }
+
+}
+
+@media (max-width: 520px) {
+  .eyebrow {
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+  }
+
+  .nav__links a:not(:last-child) {
+    display: none;
+  }
+
+  .hero__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .stats {
+    justify-content: space-between;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.smooth-scroll {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Underline link (Osmo): a line draws in on hover */
+[data-underline-link] {
+  position: relative;
+}
+
+[data-underline-link]::before {
+  content: "";
+  position: absolute;
+  bottom: -0.0625em;
+  left: 0;
+  width: 100%;
+  height: 0.08em;
+  background-color: currentColor;
+  transform: scaleX(0) rotate(0.001deg);
+  transform-origin: right;
+  transition: transform 0.735s cubic-bezier(0.625, 0.05, 0, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-underline-link]:hover::before {
+    transform-origin: left;
+    transform: scaleX(1) rotate(0.001deg);
+  }
+}
+
+/* Magnetic cursor (Osmo), as corner brackets. The reticle follows the pointer; on a link the
+   same bracket frame flips into the link's slot and wraps it. */
+.cursor {
+  position: fixed;
+  inset: 0 auto auto 0;
+  z-index: 100;
+  width: 1.5rem;
+  aspect-ratio: 1;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.cursor.is-active {
+  opacity: 1;
+}
+
+/* The frame is four fixed-size corners inside one box. Flip only resizes the box, so the
+   corners never stretch. This is the structure used by the GSAP Flip corners example. */
+.cursor-bg {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  color: var(--presence);
+  pointer-events: none;
+  transition: color 0.3s;
+  --corner: 10px;
+  --stroke: 2px;
+}
+
+.cursor-corner {
+  position: absolute;
+  width: var(--corner);
+  height: var(--corner);
+}
+
+.cursor-corner.is--tl { top: 0; left: 0; border-top: var(--stroke) solid currentColor; border-left: var(--stroke) solid currentColor; }
+.cursor-corner.is--tr { top: 0; right: 0; border-top: var(--stroke) solid currentColor; border-right: var(--stroke) solid currentColor; }
+.cursor-corner.is--bl { bottom: 0; left: 0; border-bottom: var(--stroke) solid currentColor; border-left: var(--stroke) solid currentColor; }
+.cursor-corner.is--br { bottom: 0; right: 0; border-bottom: var(--stroke) solid currentColor; border-right: var(--stroke) solid currentColor; }
+
+/* Where the frame lands on a link: a little outside the text */
+[data-magnetic-cursor-bg] {
+  position: absolute;
+  inset: -6px -10px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.btn > [data-magnetic-cursor-bg] {
+  inset: -8px; /* measured from inside the button's 2px border, so 6px outside it */
+}
+
+/* Project cards: the cursor frame lands exactly on the pinned page-width brackets (the card is
+   inset from them by --card-inset) and takes their corner size and stroke. Only the card's own
+   slot: buttons inside the Freeplay card keep the button inset above. */
+a.card > [data-magnetic-cursor-bg] {
+  inset: calc(-1 * var(--card-inset));
+}
+
+a.card .cursor-bg {
+  --corner: var(--bracket-len-frame, 36px);
+  --stroke: var(--bracket-w-frame, 4px);
+}
+
+/* Only while the frame is inside a link (same trick as Osmo's .magnetic-link .cursor-bg) */
+[data-magnetic-cursor-target] .cursor-bg {
+  color: var(--victory);
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor {
+    display: none;
+  }
+}

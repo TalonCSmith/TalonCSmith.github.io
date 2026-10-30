@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Lost | Talon Smith</title>
+    <meta name="theme-color" content="#121212" />
+    <!-- GitHub Pages serves this page at whatever path was missing (e.g. /foo/bar), so on the live
+         site resolve every relative link from the root. Opened as a local file, links stay relative. -->
+    <script>
+      if (location.protocol !== "file:") {
+        const base = document.createElement("base");
+        base.href = "/";
+        document.head.append(base);
+      }
+    </script>
+    <link rel="icon" type="image/svg+xml" href="assets/freeplay-icon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://use.typekit.net/tif6uvt.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" />
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+
+  <body>
+    <!-- Magnetic cursor follower (Osmo): bracket reticle that morphs around hovered links -->
+    <div class="cursor" aria-hidden="true">
+      <div class="cursor-bg">
+        <div class="cursor-corner is--tl"></div>
+        <div class="cursor-corner is--tr"></div>
+        <div class="cursor-corner is--bl"></div>
+        <div class="cursor-corner is--br"></div>
+      </div>
+    </div>
+
+    <div class="progressive-blur" aria-hidden="true">
+      <div class="progressive-blur__layer is--1"></div>
+      <div class="progressive-blur__layer is--2"></div>
+      <div class="progressive-blur__layer is--3"></div>
+      <div class="progressive-blur__layer is--4"></div>
+      <div class="progressive-blur__layer is--5"></div>
+    </div>
+
+    <header class="nav">
+      <a class="nav__brand" href="index.html" aria-label="Talon Smith, home">
+        <img class="nav__logo" src="assets/freeplay-icon.svg" alt="" width="28" height="27" />Talon Smith
+      </a>
+      <nav class="nav__links" aria-label="Primary">
+        <a href="index.html#about">About</a>
+        <a href="index.html#work">Work</a>
+        <a href="assets/Talon-Smith-Resume.pdf" target="_blank" rel="noopener">Resume</a>
+        <a href="https://freeplaystudios.com" target="_blank" rel="noopener">Freeplay</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <pre class="hero__ascii" aria-hidden="true"></pre>
+        <div class="hero__frame brackets">
+          <p class="eyebrow">Error 404</p>
+          <h1 class="hero__title">Wrong <span class="accent">Talon</span>?</h1>
+          <p class="hero__lead">This page doesn't exist. The real one is right this way.</p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="index.html">Back home <span aria-hidden="true">&rarr;</span></a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer parallax (from Osmo): the footer slides up into place and a dark layer fades off it -->
+    <div data-footer-parallax class="footer-wrap">
+      <footer data-footer-parallax-inner class="footer">
+        <div class="footer__links-row">
+          <div class="footer__col">
+            <p class="footer__eyebrow">( Pages )</p>
+            <div class="footer__links">
+              <a href="index.html" class="footer__a">Home</a>
+              <a href="index.html#about" class="footer__a">About</a>
+              <a href="index.html#work" class="footer__a">Work</a>
+              <a href="assets/Talon-Smith-Resume.pdf" target="_blank" rel="noopener" class="footer__a">Resume</a>
+              <a href="https://freeplaystudios.com" target="_blank" rel="noopener" class="footer__a">Freeplay Studios</a>
+            </div>
+          </div>
+          <div class="footer__col">
+            <p class="footer__eyebrow">( Socials )</p>
+            <div class="footer__links">
+              <a href="https://www.instagram.com/talon.in.color/" target="_blank" rel="noopener" class="footer__a">Instagram</a>
+              <a href="https://www.linkedin.com/in/talonsmith/" target="_blank" rel="noopener" class="footer__a">LinkedIn</a>
+            </div>
+          </div>
+          <div class="footer__col">
+            <p class="footer__eyebrow">( Contact )</p>
+            <div class="footer__links">
+              <a href="mailto:talon@freeplaystudios.com" class="footer__a">talon@freeplaystudios.com</a>
+              <a href="tel:+19179307464" class="footer__a">+1 917 930 7464</a>
+            </div>
+          </div>
+        </div>
+
+        <p class="footer__copy">&copy; <span id="year">2026</span> Talon Smith</p>
+      </footer>
+      <div data-footer-parallax-dark class="footer-wrap__dark"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/Flip.min.js" defer></script>
+    <script src="js/footer-parallax.js" defer></script>
+    <script src="js/magnetic-cursor.js" defer></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/ascii-frames.js" defer></script>
+    <script src="js/ascii-hero.js" defer></script>
+  </body>
+</html>
